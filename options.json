@@ -1,0 +1,32 @@
+{
+  "info": {
+    "title": "Scodus Support Ticket",
+    "version": "1.0",
+    "description": "Scodus Support Ticket",
+    "termsOfService": "#",
+    "license": {
+      "name": "MIT",
+      "url": "https://es.wikipedia.org/wiki/Licencia_MIT"
+    },
+    "contact": {
+      "name": "Scodus",
+      "url": "https://scodus.com",
+      "email": "scodusnp@gmail.com"
+    },
+    "xLogo": {
+      "url": "https://github.com/joolfe/logoBanner.png",
+      "backgroundColor": "#FFFFFF",
+      "altText": "logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://scodus-support-ticket.scodus.com",
+      "description": "Base URL"
+    },
+    {
+      "url": "https://scodus-support-ticket.scodus.com",
+      "description": "Base URL"
+    }
+  ]
+}

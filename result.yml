@@ -1,0 +1,2023 @@
+openapi: 3.0.0
+info:
+  title: Scodus Support Ticket
+  description: Scodus Support Ticket
+  version: '1.0'
+  x-logo:
+    url: https://github.com/joolfe/logoBanner.png
+    backgroundColor: '#FFFFFF'
+    altText: logo
+  termsOfService: '#'
+  contact:
+    name: Scodus
+    url: https://scodus.com
+    email: scodusnp@gmail.com
+  license:
+    name: MIT
+    url: https://es.wikipedia.org/wiki/Licencia_MIT
+servers:
+  - url: https://scodus-support-ticket.scodus.com
+    description: Base URL
+  - url: https://scodus-support-ticket.scodus.com
+    description: Base URL
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    noauthAuth:
+      type: http
+      scheme: noauth
+tags:
+  - name: Authentication
+  - name: Authentication > social login
+  - name: site setting
+  - name: role
+  - name: user
+  - name: ticket
+  - name: ticket > call
+  - name: ticket > discussion
+  - name: ticket > email
+  - name: ticket > meeting
+  - name: ticket > note
+  - name: task
+  - name: dashboard
+paths:
+  /api/login/{provider}/callback:
+    get:
+      tags:
+        - Authentication > social login
+      summary: login callback
+      parameters:
+        - name: token
+          in: query
+          schema:
+            type: string
+          example: >-
+            ya29.a0AfB_byB43ueGGGkUA2qKbWMagbPzUgBbGk1hEQH0oH5Nq3XLVlOg02bf-1u_jYpca9OVJYqlJq5LfvYl0CaEe-dAK6vMmjEKTzJj5aE2mfwVA9MKt4X0aDDOBXHu34y7FuXsnp_dup2_FURod6Yp8Pma_U-AzH0gW94SaCgYKATMSARISFQHGX2MiiZoFL1yKXHx4Pin8iajn_Q0171
+        - name: provider
+          in: path
+          schema:
+            type: string
+          required: true
+          example: google
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      summary: login
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: superadmin@superadmin.com
+                password:
+                  type: string
+                  example: P@ssw0rd
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/logout:
+    post:
+      tags:
+        - Authentication
+      summary: logout
+      requestBody:
+        content: {}
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/refresh-token/{refresh_token}:
+    post:
+      tags:
+        - Authentication
+      summary: refresh token
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: refresh_token
+          in: path
+          schema:
+            type: string
+          required: true
+          example: '{{refresh_token}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user-detail:
+    get:
+      tags:
+        - Authentication
+      summary: user detail
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/update-user-detail:
+    post:
+      tags:
+        - Authentication
+      summary: user detail update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                delete_image:
+                  type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/change-password:
+    post:
+      tags:
+        - Authentication
+      summary: change password
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                old_password:
+                  type: string
+                  example: P@ssw0rd
+                password:
+                  type: string
+                  example: P@ssw0rd
+                password_confirmation:
+                  type: string
+                  example: P@ssw0rd
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/reset-password-mail:
+    post:
+      tags:
+        - Authentication
+      summary: reset password mail
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: superadmin@superadmin.com
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/reset-password-mail-otp:
+    post:
+      tags:
+        - Authentication
+      summary: reset password mail otp
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: bikashxaus@gmail.com
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/reset-password-otp-verification:
+    post:
+      tags:
+        - Authentication
+      summary: reset password otp verification
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: integer
+                  example: '1234'
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/reset-password:
+    post:
+      tags:
+        - Authentication
+      summary: reset password
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: P@ssw0rd
+                password_confirmation:
+                  type: string
+                  example: P@ssw0rd
+                token:
+                  type: string
+                  example: kGbD
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/register:
+    post:
+      tags:
+        - Authentication
+      summary: register
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: tomnjerry
+                last_name:
+                  type: string
+                  example: jerry
+                phone:
+                  type: integer
+                  example: '987654321'
+                email:
+                  type: string
+                  example: feyeloh509@fahih.com
+                password:
+                  type: string
+                  example: P@ssw0rd
+                password_confirmation:
+                  type: string
+                  example: P@ssw0rd
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/resend-account-verification-mail:
+    post:
+      tags:
+        - Authentication
+      summary: resend email verification mail otp
+      requestBody:
+        content: {}
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/account-verification:
+    post:
+      tags:
+        - Authentication
+      summary: account verification
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: integer
+                  example: '12231'
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/delete-user:
+    delete:
+      tags:
+        - Authentication
+      summary: delete user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/site-setting:
+    get:
+      tags:
+        - site setting
+      summary: site setting
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - site setting
+      summary: site setting update or create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Scodus
+                address:
+                  type: string
+                  example: Nepal
+                primary_email:
+                  type: string
+                  example: info@scodus.com
+                secondary_email:
+                  type: string
+                primary_phone:
+                  type: string
+                secondary_phone:
+                  type: string
+                map_location:
+                  type: string
+                registration_number:
+                  type: string
+                linkedin_url:
+                  type: string
+                facebook_url:
+                  type: string
+                twitter_url:
+                  type: string
+                youtube_url:
+                  type: string
+                instagram_url:
+                  type: string
+                logo:
+                  type: string
+                  format: binary
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/role:
+    get:
+      tags:
+        - role
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          description: 1||0
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+          description: '||name'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/role/{id}:
+    get:
+      tags:
+        - role
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user:
+    get:
+      tags:
+        - user
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: status
+          in: query
+          schema:
+            type: string
+          description: '||active,inactive'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - user
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: augxdeveloper@yahoo.com
+                password:
+                  type: string
+                  example: P@ssw0rd
+                password_confirmation:
+                  type: string
+                  example: P@ssw0rd
+                first_name:
+                  type: string
+                  example: Aug
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                  example: X
+                departure_time:
+                  type: string
+                  example: '20:00'
+                status:
+                  type: string
+                  example: active
+                image:
+                  type: string
+                  format: binary
+                role[]:
+                  type: string
+                  example: support
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/{id}:
+    get:
+      tags:
+        - user
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - user
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: augxdeveloper@gmail.com
+                password:
+                  type: string
+                  example: P@ssw0rd
+                password_confirmation:
+                  type: string
+                  example: P@ssw0rd
+                first_name:
+                  type: string
+                  example: Aug
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                  example: X
+                status:
+                  type: string
+                  example: active
+                image:
+                  type: string
+                  format: binary
+                role[]:
+                  type: string
+                  example: developer
+                _method:
+                  type: string
+                  example: PUT
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '13'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - user
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/{id}/update-status:
+    post:
+      tags:
+        - user
+      summary: update status
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                status:
+                  type: string
+                  description: '||active,inactive'
+                  example: active
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '7'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/call:
+    get:
+      tags:
+        - ticket > call
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: ticket_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > call
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: '1'
+                contacted_user_id:
+                  type: integer
+                  description: Contacted User Id
+                  example: '7'
+                call_outcome:
+                  type: string
+                  description: '||received,missed,dropped'
+                  example: missed
+                call_direction:
+                  type: string
+                  description: '||incoming,outgoing'
+                  example: outgoing
+                description:
+                  type: string
+                  description: call description
+                  example: a b c
+                contacted_datetime:
+                  type: string
+                  example: '2024-02-22 20:48:01'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/call/{id}:
+    get:
+      tags:
+        - ticket > call
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > call
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                ticket_id:
+                  type: integer
+                  example: '1'
+                contacted_id:
+                  type: integer
+                  example: '7'
+                call_outcome:
+                  type: string
+                  example: missed
+                call_direction:
+                  type: string
+                  example: outgoing
+                description:
+                  type: string
+                  example: a b c
+                contact_datetime:
+                  type: string
+                  example: '2024-02-22 20:48:01'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/call/{id}/:
+    delete:
+      tags:
+        - ticket > call
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/discussion:
+    get:
+      tags:
+        - ticket > discussion
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: ticket_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > discussion
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: message
+                  example: ticket11
+                ticket_id:
+                  type: integer
+                  description: ticket id
+                  example: '1'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/discussion/{id}:
+    get:
+      tags:
+        - ticket > discussion
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > discussion
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                message:
+                  type: string
+                  example: ticket11
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/discussion/{id}/:
+    delete:
+      tags:
+        - ticket > discussion
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/email:
+    get:
+      tags:
+        - ticket > email
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: ticket_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > email
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: '1'
+                contacted_user_id:
+                  type: integer
+                  example: '7'
+                description:
+                  type: string
+                  example: a b c
+                contacted_datetime:
+                  type: string
+                  example: '2024-02-22 20:48:01'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/email/{id}:
+    get:
+      tags:
+        - ticket > email
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > email
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                ticket_id:
+                  type: integer
+                  example: '1'
+                contacted_user_id:
+                  type: integer
+                  example: '7'
+                description:
+                  type: string
+                  example: a b c
+                contacted_datetime:
+                  type: string
+                  example: '2024-02-22 20:48:01'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/email/{id}/:
+    delete:
+      tags:
+        - ticket > email
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/meeting:
+    get:
+      tags:
+        - ticket > meeting
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: ticket_id
+          in: query
+          schema:
+            type: integer
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > meeting
+      summary: store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                ticket_id: 1
+                description: a b c
+                meeting_datetime: '2024-02-22 20:48:01'
+                attendees:
+                  - Drake(drake@drake.com)(DrakeCompany)
+                  - Drake(drake@drake.com)(DrakeCompany)
+                  - Drake(drake@drake.com)(DrakeCompany)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/meeting/{id}:
+    get:
+      tags:
+        - ticket > meeting
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > meeting
+      summary: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                _method: put
+                description: a b c d
+                meeting_datetime: '2024-02-22 20:48:01'
+                attendees:
+                  - Drake(drake@drake.com)(DrakeCompany)
+                  - Drake(drake@drake.com)(DrakeCompany)
+                  - Drake(drake@drake.com)(DrakeCompany)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/meeting/{id}/:
+    delete:
+      tags:
+        - ticket > meeting
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/note:
+    get:
+      tags:
+        - ticket > note
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: ticket_id
+          in: query
+          schema:
+            type: integer
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > note
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  description: Ticket Id
+                  example: '1'
+                description:
+                  type: string
+                  description: note description
+                  example: note11
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/note/{id}:
+    get:
+      tags:
+        - ticket > note
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '3'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > note
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                ticket_id:
+                  type: integer
+                  example: '7'
+                description:
+                  type: string
+                  example: note1sss
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/note/{id}/:
+    delete:
+      tags:
+        - ticket > note
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket:
+    get:
+      tags:
+        - ticket
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: status
+          in: query
+          schema:
+            type: string
+          description: '||open,progress,review,complete'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ticket name
+                  example: ticket
+                pipeline:
+                  type: string
+                  description: '||support,developer,devops'
+                  example: support
+                status:
+                  type: string
+                  description: '||open,in_progress,in_review,closed'
+                  example: open
+                description:
+                  type: string
+                  description: ticket description
+                  example: a b c
+                source:
+                  type: string
+                  description: '||call,email,message'
+                  example: call
+                ticket_owner_user_id:
+                  type: integer
+                  description: ticket owner user id
+                  example: '7'
+                priority:
+                  type: string
+                  description: Ticket Priority|low,normal,high,urgent
+                  example: high
+                order_number:
+                  type: integer
+                  description: Ticket Order Float
+                  example: '1'
+                attachments[]:
+                  type: string
+                  format: binary
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket/{id}:
+    get:
+      tags:
+        - ticket
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                name:
+                  type: string
+                  example: ticket1
+                pipeline:
+                  type: string
+                  example: support
+                status:
+                  type: string
+                  description: '||open,in_progress,in_review,closed'
+                  example: open
+                description:
+                  type: string
+                  example: a b c
+                source:
+                  type: string
+                  example: call
+                ticket_owner_user_id:
+                  type: integer
+                  example: '7'
+                priority:
+                  type: string
+                  description: Ticket Priority|low,normal,high,urgent
+                  example: high
+                order_number:
+                  type: string
+                  description: Ticket Order Float
+                attachments[]:
+                  type: string
+                  format: binary
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket/{id}/update-status:
+    post:
+      tags:
+        - ticket
+      summary: update status
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                status:
+                  type: string
+                  description: '||open,in_progress,in_review,closed'
+                  example: progress
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket/{id}/:
+    delete:
+      tags:
+        - ticket
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket/{id}/attachment/{file_id}/rename:
+    post:
+      tags:
+        - ticket
+      summary: attachment rename
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                name:
+                  type: string
+                  example: task 1edatt
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '73'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket/{id}/attachment/{file_id}:
+    delete:
+      tags:
+        - ticket
+      summary: attachment delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '74'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/ticket/{id}/attachment/{file_id}/download:
+    get:
+      tags:
+        - ticket
+      summary: attachment download
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '76'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task:
+    get:
+      tags:
+        - task
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: ticket_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - task
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                parent_id:
+                  type: string
+                  description: Parent Task Id
+                name:
+                  type: string
+                  description: Task name
+                  example: task 1
+                description:
+                  type: string
+                  description: Task description
+                  example: task 1 a b c
+                status:
+                  type: string
+                  description: Task Status|todo,in_progress,in_review,complete
+                  example: todo
+                assigned_to_user_id[]:
+                  type: integer
+                  example: '12'
+                attachments[]:
+                  type: string
+                  format: binary
+                priority:
+                  type: string
+                  description: Task Priority|low,normal,high,urgent
+                order_number:
+                  type: string
+                  description: Task Order Float|
+                ticket_id:
+                  type: string
+                  description: Task Associated Ticket Id/Nullable
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}:
+    get:
+      tags:
+        - task
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - task
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                parent_id:
+                  type: string
+                name:
+                  type: string
+                  example: task 1ed
+                description:
+                  type: string
+                  example: task 1 a b c
+                status:
+                  type: string
+                  description: Task Status|todo,in_progress,in_review,complete
+                  example: in_progress
+                assigned_to_user_id[]:
+                  type: integer
+                  example: '12'
+                attachments[]:
+                  type: string
+                  format: binary
+                priority:
+                  type: string
+                  description: Task Priority|low,normal,high,urgent
+                order_number:
+                  type: string
+                  description: Task Order Float|
+                ticket_id:
+                  type: string
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}/update-status:
+    post:
+      tags:
+        - task
+      summary: update status
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                status:
+                  type: string
+                  description: Task Status|todo,in_progress,in_review,complete
+                  example: progress
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}/update-order-number:
+    post:
+      tags:
+        - task
+      summary: update order number
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                status:
+                  type: string
+                  description: Task Status|todo,in_progress,in_review,complete
+                  example: progress
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}/:
+    delete:
+      tags:
+        - task
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}/attachment/{file_id}/rename:
+    post:
+      tags:
+        - task
+      summary: attachment rename
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                name:
+                  type: string
+                  example: task 1edatt
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '73'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}/attachment/{file_id}:
+    delete:
+      tags:
+        - task
+      summary: attachment delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '72'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task/{id}/attachment/{file_id}/download:
+    get:
+      tags:
+        - task
+      summary: attachment download
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '73'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/dashboard:
+    get:
+      tags:
+        - dashboard
+      summary: dashboard
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
