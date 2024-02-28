@@ -8,7 +8,7 @@
 
 3. Run `make doc` in terminal to generate openApi.
 
-# 4. View Api in : https://scodus.github.io/bus_reservation_swagger/
+# 4. View Api in : https://scodus.github.io/scodus_support_ticket/
 
 #### Reference `https://joolfe.github.io/postman-to-openapi/`
 # bus_reservation_swagger
