@@ -11,6 +11,3 @@
 # 4. View Api in : https://scodus.github.io/scodus_support_ticket_swagger/
 
 #### Reference `https://joolfe.github.io/postman-to-openapi/`
-# bus_reservation_swagger
-# bus_reservation_swagger
-# bus_reservation_swagger
