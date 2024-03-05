@@ -16,7 +16,7 @@ info:
     name: MIT
     url: https://es.wikipedia.org/wiki/Licencia_MIT
 servers:
-  - url: https://scodus-support-ticket.scodus.com
+  - url: https://support.scoduscorp.com
     description: Base URL
   - url: https://scodus-support-ticket.scodus.com
     description: Base URL
