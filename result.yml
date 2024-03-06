@@ -1464,6 +1464,10 @@ paths:
                 attachments[]:
                   type: string
                   format: binary
+                start_date:
+                  type: string
+                due_date:
+                  type: string
       security:
         - bearerAuth: []
       responses:
@@ -1532,6 +1536,10 @@ paths:
                 attachments[]:
                   type: string
                   format: binary
+                start_date:
+                  type: string
+                due_date:
+                  type: string
       security:
         - bearerAuth: []
       parameters:
@@ -1731,8 +1739,9 @@ paths:
               type: object
               properties:
                 parent_id:
-                  type: string
+                  type: integer
                   description: Parent Task Id
+                  example: '5'
                 name:
                   type: string
                   description: Task name
@@ -1780,7 +1789,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '1'
+          example: '5'
       responses:
         '200':
           description: Successful response
@@ -1885,10 +1894,10 @@ paths:
                 _method:
                   type: string
                   example: PUT
-                status:
-                  type: string
-                  description: Task Status|todo,in_progress,in_review,complete
-                  example: progress
+                order_number:
+                  type: integer
+                  description: new order number in list
+                  example: '2'
       security:
         - bearerAuth: []
       parameters:
@@ -1897,7 +1906,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '1'
+          example: '4'
       responses:
         '200':
           description: Successful response
