@@ -36,12 +36,16 @@ tags:
   - name: user
   - name: ticket
   - name: ticket > call
+  - name: ticket > discussion category
   - name: ticket > discussion
   - name: ticket > email
   - name: ticket > meeting
   - name: ticket > note
   - name: task
   - name: dashboard
+  - name: Lead Source
+  - name: Lead Status
+  - name: lead
 paths:
   /api/login/{provider}/callback:
     get:
@@ -79,10 +83,10 @@ paths:
               properties:
                 email:
                   type: string
-                  example: superadmin@superadmin.com
+                  example: scodusnp@gmail.com
                 password:
                   type: string
-                  example: P@ssw0rd
+                  example: Scodus!23
       responses:
         '200':
           description: Successful response
@@ -848,10 +852,10 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /api/discussion:
+  /api/discussion-category:
     get:
       tags:
-        - ticket > discussion
+        - ticket > discussion category
       summary: list
       security:
         - bearerAuth: []
@@ -886,6 +890,134 @@ paths:
             application/json: {}
     post:
       tags:
+        - ticket > discussion category
+      summary: store
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: message
+                  example: hello
+                ticket_id:
+                  type: integer
+                  description: ticket id
+                  example: '1'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/discussion-category/{id}:
+    get:
+      tags:
+        - ticket > discussion category
+      summary: single
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ticket > discussion category
+      summary: update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: put
+                name:
+                  type: string
+                  example: helloo
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/discussion-category/{id}/:
+    delete:
+      tags:
+        - ticket > discussion category
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/discussion:
+    get:
+      tags:
+        - ticket > discussion
+      summary: list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: search_keyword
+          in: query
+          schema:
+            type: string
+        - name: discussion_category_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
         - ticket > discussion
       summary: store
       requestBody:
@@ -897,8 +1029,8 @@ paths:
                 message:
                   type: string
                   description: message
-                  example: ticket11
-                ticket_id:
+                  example: dis 1
+                discussion_category_id:
                   type: integer
                   description: ticket id
                   example: '1'
@@ -943,7 +1075,7 @@ paths:
                   example: put
                 message:
                   type: string
-                  example: ticket11
+                  example: disssss
       security:
         - bearerAuth: []
       parameters:
@@ -1450,9 +1582,8 @@ paths:
                   description: '||call,email,message'
                   example: call
                 ticket_owner_user_id:
-                  type: integer
+                  type: string
                   description: ticket owner user id
-                  example: '7'
                 priority:
                   type: string
                   description: Ticket Priority|low,normal,high,urgent
@@ -1686,7 +1817,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '76'
+          example: '1'
       responses:
         '200':
           description: Successful response
@@ -1739,13 +1870,12 @@ paths:
               type: object
               properties:
                 parent_id:
-                  type: integer
+                  type: string
                   description: Parent Task Id
-                  example: '5'
                 name:
                   type: string
                   description: Task name
-                  example: task 1
+                  example: task 8
                 description:
                   type: string
                   description: Task description
@@ -1897,7 +2027,7 @@ paths:
                 order_number:
                   type: integer
                   description: new order number in list
-                  example: '2'
+                  example: '1'
       security:
         - bearerAuth: []
       parameters:
@@ -1906,7 +2036,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '4'
+          example: '13'
       responses:
         '200':
           description: Successful response
@@ -2025,6 +2155,365 @@ paths:
       summary: dashboard
       security:
         - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/lead-sources:
+    post:
+      tags:
+        - Lead Source
+      summary: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Phone
+                is_active: false
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Lead Source
+      summary: get all
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paginate
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/lead-sources/{id}:
+    put:
+      tags:
+        - Lead Source
+      summary: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: new text
+                is_active: false
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Lead Source
+      summary: show
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Lead Source
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/lead-statuses:
+    post:
+      tags:
+        - Lead Status
+      summary: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Phone
+                is_active: true
+                color: '#123456'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Lead Status
+      summary: get all
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/lead-statuses/{id}:
+    put:
+      tags:
+        - Lead Status
+      summary: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Phone 1
+                is_active: false
+                color: '#123'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Lead Status
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Lead Status
+      summary: show
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/leads:
+    post:
+      tags:
+        - lead
+      summary: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                software: ACCOUNTING
+                phone_1: '1234567890'
+                lead_source_id: 2
+                lead_status_id: 2
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - lead
+      summary: get all
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/leads/{id}:
+    put:
+      tags:
+        - lead
+      summary: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                software: ACCOUNTING
+                phone_1: '1234567890'
+                lead_source_id: 2
+                lead_status_id: 2
+                company: asdf
+                company_address: asdf
+                contact_name: jhola
+                phone_2: asdf
+                email: asdf
+                representative_id: 1
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '3'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - lead
+      summary: show
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '3'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - lead
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
       responses:
         '200':
           description: Successful response
