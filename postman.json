@@ -4235,12 +4235,103 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "save all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"statuses\": [\r\n        {\r\n            \"name\": \"Task 1\",\r\n            \"color\": \"#fff123\",\r\n            \"order\": 1\r\n        },\r\n        {\r\n            \"name\": \"Task 2\",\r\n            \"color\": \"#fff123\",\r\n            \"order\": 2\r\n        },\r\n        {\r\n            \"name\": \"Task 3\",\r\n            \"color\": \"#fff\",\r\n            \"order\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/lead-statuses/create-many",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"lead-statuses",
+								"create-many"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "lead",
 			"item": [
+				{
+					"name": "activities",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/leads/:id/activities",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"leads",
+										":id",
+										"activities"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "7"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "create",
 					"request": {
@@ -4803,7 +4894,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Task 1\",\r\n    \"priority\": \"MEDIUM\",\r\n    \"start_date\": \"2025-08-04 15:00:00\",\r\n    \"description\": \"some description\",\r\n    \"lead_id\": 2,\r\n    \"task_type_id\": 1,\r\n    \"notify\": true,\r\n    \"assigned_to\": [\r\n        {\r\n            \"assigned_to_id\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Task 1\",\r\n    \"priority\": \"MEDIUM\",\r\n    \"start_date\": \"2025-08-04 15:00:00\",\r\n    \"description\": \"some description\",\r\n    \"lead_id\": 7,\r\n    \"task_type_id\": 1,\r\n    \"notify\": true,\r\n    \"assigned_to\": [\r\n        {\r\n            \"assigned_to_id\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4840,7 +4931,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Task 1\",\r\n    \"priority\": \"MEDIUM\",\r\n    \"start_date\": \"2025-08-04 15:00:00\",\r\n    \"description\": \"some description\",\r\n    \"lead_id\": 2,\r\n    \"task_type_id\": 1,\r\n    \"notify\": true,\r\n    \"assigned_to\": [\r\n        {\r\n            \"assigned_to_id\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Task 1\",\r\n    \"priority\": \"MEDIUM\",\r\n    \"start_date\": \"2025-08-04 15:00:00\",\r\n    \"description\": \"some description\",\r\n    \"lead_id\": 7,\r\n    \"task_type_id\": 1,\r\n    \"notify\": true,\r\n    \"assigned_to\": [\r\n        // {\r\n        //     \"assigned_to_id\": 1\r\n        // }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4860,7 +4951,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "4"
+									"value": "10"
 								}
 							]
 						}

@@ -46,6 +46,7 @@ tags:
   - name: Lead Source
   - name: Lead Status
   - name: lead
+  - name: lead > activities
   - name: task type
   - name: sales task
   - name: sales task > comments
@@ -2391,6 +2392,64 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /api/lead-statuses/create-many:
+    post:
+      tags:
+        - Lead Status
+      summary: save all
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                statuses:
+                  - name: Task 1
+                    color: '#fff123'
+                    order: 1
+                  - name: Task 2
+                    color: '#fff123'
+                    order: 2
+                  - name: Task 3
+                    color: '#fff'
+                    order: 3
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/leads/{id}/activities:
+    get:
+      tags:
+        - lead > activities
+      summary: get all
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '7'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
   /api/leads:
     post:
       tags:
@@ -2696,7 +2755,7 @@ paths:
                 priority: MEDIUM
                 start_date: '2025-08-04 15:00:00'
                 description: some description
-                lead_id: 2
+                lead_id: 7
                 task_type_id: 1
                 notify: true
                 assigned_to:
@@ -2770,11 +2829,10 @@ paths:
                 priority: MEDIUM
                 start_date: '2025-08-04 15:00:00'
                 description: some description
-                lead_id: 2
+                lead_id: 7
                 task_type_id: 1
                 notify: true
-                assigned_to:
-                  - assigned_to_id: 1
+                assigned_to: []
       security:
         - bearerAuth: []
       parameters:
@@ -2783,7 +2841,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '4'
+          example: '10'
       responses:
         '200':
           description: Successful response
