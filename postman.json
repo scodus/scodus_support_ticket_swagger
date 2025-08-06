@@ -4760,6 +4760,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "set default",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/task-types/:id/set-default",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"task-types",
+								":id",
+								"set-default"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -5092,6 +5128,57 @@
 							]
 						},
 						"description": "All status:\n\n- PENDING\n    \n- ONGOING\n    \n- COMPLETED\n    \n- CANCELLED"
+					},
+					"response": []
+				},
+				{
+					"name": "update status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"COMPLETED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/sales-tasks/:id/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"sales-tasks",
+								":id",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "13"
+								}
+							]
+						}
 					},
 					"response": []
 				}
