@@ -2490,6 +2490,11 @@ paths:
           schema:
             type: string
           example: application/json
+        - name: lead_status
+          in: query
+          schema:
+            type: integer
+          example: '5'
       responses:
         '200':
           description: Successful response
@@ -2816,20 +2821,6 @@ paths:
           schema:
             type: string
           example: application/json
-        - name: paginate
-          in: query
-          schema:
-            type: integer
-          example: '1'
-        - name: limit
-          in: query
-          schema:
-            type: integer
-          example: '1'
-        - name: status
-          in: query
-          schema:
-            type: string
       responses:
         '200':
           description: Successful response

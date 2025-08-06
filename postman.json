@@ -4537,13 +4537,29 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/leads",
+							"raw": "{{url}}/api/leads?lead_status=5",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"leads"
+							],
+							"query": [
+								{
+									"key": "software",
+									"value": "RESTAURANT",
+									"disabled": true
+								},
+								{
+									"key": "lead_source",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "lead_status",
+									"value": "5"
+								}
 							]
 						}
 					},
@@ -5104,7 +5120,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/api/sales-tasks?paginate=1&limit=1&status=",
+							"raw": "{{url}}/api/sales-tasks",
 							"host": [
 								"{{url}}"
 							],
@@ -5115,15 +5131,38 @@
 							"query": [
 								{
 									"key": "paginate",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								},
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								},
 								{
 									"key": "status",
-									"value": ""
+									"value": "COMPLETED",
+									"disabled": true
+								},
+								{
+									"key": "date",
+									"value": "2025-08-05",
+									"disabled": true
+								},
+								{
+									"key": "lead",
+									"value": "9",
+									"disabled": true
+								},
+								{
+									"key": "task_type",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "assigned_to",
+									"value": "me",
+									"disabled": true
 								}
 							]
 						},
