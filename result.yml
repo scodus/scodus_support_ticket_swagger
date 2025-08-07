@@ -31,6 +31,7 @@ components:
 tags:
   - name: Authentication
   - name: Authentication > social login
+  - name: Authentication > invitation
   - name: site setting
   - name: role
   - name: user
@@ -69,6 +70,78 @@ paths:
             type: string
           required: true
           example: google
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/invite:
+    post:
+      tags:
+        - Authentication > invitation
+      summary: send invitation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: somemail1@email.com
+                roles:
+                  - support
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Authentication > invitation
+      summary: get all
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/invite/register:
+    post:
+      tags:
+        - Authentication > invitation
+      summary: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: new user 1
+                password: P@ssw0rd123
+                password_confirmation: P@ssw0rd123
+                invitation_token: a9aae5fa0a0a11599c131d1bb018c5e1
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
       responses:
         '200':
           description: Successful response
@@ -447,28 +520,6 @@ paths:
       summary: list
       security:
         - bearerAuth: []
-      parameters:
-        - name: paginate
-          in: query
-          schema:
-            type: integer
-          description: 1||0
-          example: '1'
-        - name: limit
-          in: query
-          schema:
-            type: integer
-          example: '5'
-        - name: page
-          in: query
-          schema:
-            type: integer
-          example: '1'
-        - name: search_keyword
-          in: query
-          schema:
-            type: string
-          description: '||name'
       responses:
         '200':
           description: Successful response
@@ -2723,7 +2774,23 @@ paths:
             schema:
               type: object
               example:
-                comment: this is a comment 2
+                comment: >-
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, Lorem Ipsum is
+                  simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever
+                  since the 1500s, Lorem Ipsum is simply dummy text of the
+                  printing and typesetting industry. Lorem Ipsum has been the
+                  industry's standard dummy text ever since the 1500s, Lorem
+                  Ipsum is simply dummy text of the printing and typesetting
+                  industry. Lorem Ipsum has been the industry's standard dummy
+                  text ever since the 1500s, Lorem Ipsum is simply dummy text of
+                  the printing and typesetting industry. Lorem Ipsum has been
+                  the industry's standard dummy text ever since the 1500s, Lorem
+                  Ipsum is simply dummy text of the printing and typesetting
+                  industry. Lorem Ipsum has been the industry's standard dummy
+                  text ever since the 1500s,
       security:
         - bearerAuth: []
       parameters:
